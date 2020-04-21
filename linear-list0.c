@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// this file implements the insert and two link list merge operations
+//
+// the link list in this file has one head node, which doesn't store infomation.
+//
 // the i as the function parameter standing for the position not index starts from 1 
 
 typedef struct LNode {
@@ -27,6 +31,7 @@ void freel(LinkList l) {
     }
 }
 
+// get the node in link list using the position i(starts from 1)
 int nodel(LinkList l, int i, LNode** node) {
     LNode* p0 = l->next;
     int i0 = i;
@@ -57,6 +62,24 @@ int insertl(LinkList l, int i, char c) {
     return 0;
 }
 
+// merge the second link lists with the first link list in ascending order. 
+// both of them are in ascending order before merged
+int mergel(LinkList la, LinkList lb) {
+    LNode *p = la;
+    LNode *pa = la->next, *pb = lb->next;
+    while (pa && pb) {
+        if (pa->data < pb->data) {
+            p->next = pa;
+            pa = pa->next;
+        } else {
+            p->next = pb;
+            pb = pb->next;
+        }
+        p = p->next;
+    }
+    p->next = pa ? pa : pb;
+}
+
 int main() {
     LinkList l = (LinkList)malloc(sizeof(LNode));
     LNode* n0 = (LNode*)malloc(sizeof(LNode));
@@ -66,21 +89,46 @@ int main() {
     LNode* n4 = (LNode*)malloc(sizeof(LNode));
     n0->data = 'a';
     n0->next = n1;
-    n1->data = 'b';
+    n1->data = 'e';
     n1->next = n2;
-    n2->data = 'c';
+    n2->data = 'h';
     n2->next = n3;
-    n3->data = 'd';
+    n3->data = 'n';
     n3->next = n4;
-    n4->data = 'e';
+    n4->data = 't';
     n4->next = NULL;
     l->data = '$';
     l->next = n0;
 
+    LinkList l2 = (LinkList)malloc(sizeof(LNode));
+    LNode *n20 = (LNode*)malloc(sizeof(LNode));
+    LNode *n21 = (LNode*)malloc(sizeof(LNode));
+    LNode *n22 = (LNode*)malloc(sizeof(LNode));
+    LNode *n23 = (LNode*)malloc(sizeof(LNode));
+    n20->data = 'b';
+    n20->next = n21;
+    n21->data = 'c';
+    n21->next = n22;
+    n22->data = 'f';
+    n22->next = n23;
+    n23->data = 'v';
+    n23->next = NULL;
+    l2->data = '$';
+    l2->next = n20;
+
+    printf("l: ");
     printl(l);
-    int res = insertl(l, 6, 'z');
-    if (res == -1) return -1;
+    printf("l2: ");
+    printl(l2);
+
+    mergel(l, l2);
+
+    printf("merged: ");
     printl(l);
+
+    printf("l2: ");
+    printl(l2);
+
 
     freel(l);
     return 0;
