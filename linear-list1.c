@@ -53,6 +53,11 @@ void phree(Node* a, int i) {
     a->next = i;
 }
 
+/* i0 and i1 stand for the two link lists, s stands for the result of (i0 - i1)U(i1 - i0) */
+void difference(Node* a, int i0, int i1, int s) {
+
+}
+
 // a[0] points to the first node, a[1] points to the first unused node
 int main() {
     Node* a = NULL;
